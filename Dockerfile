@@ -38,7 +38,7 @@ RUN echo "APP_NAME=VAPOR" > .env && \
     echo "APP_LOCALE=ru" >> .env && \
     echo "APP_FALLBACK_LOCALE=ru" >> .env && \
     echo "DB_CONNECTION=sqlite" >> .env && \
-    echo "DB_DATABASE=/var/www/html/storage/database.sqlite" >> .env && \
+    # DB_DATABASE will be set by Render environment variables
     echo "LOG_CHANNEL=stack" >> .env && \
     echo "LOG_LEVEL=error" >> .env && \
     echo "SESSION_DRIVER=file" >> .env && \
