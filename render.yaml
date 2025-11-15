@@ -34,7 +34,7 @@ services:
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE
-        value: /var/www/html/database/database.sqlite
+        value: /var/www/html/storage/database/database.sqlite
       - key: LOG_CHANNEL
         value: stack
       - key: LOG_LEVEL
@@ -49,6 +49,6 @@ services:
       name: vapor-storage
       mountPath: /var/www/html/storage
       sizeGB: 1
-    # Also mount database directory to persistent storage
-    # Note: Database should be in persistent storage to survive restarts
+    # Note: Database file should be in persistent storage
+    # We'll store it in storage/database to use the persistent disk
 
