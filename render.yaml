@@ -19,6 +19,8 @@ services:
         value: production
       - key: APP_NAME
         value: VAPOR
+      - key: APP_KEY
+        value: base64:KZ7ZcvhZd78pShCKFUQoHUmOKFdPXxay6HVTIqnerPI=
       - key: APP_URL
         value: https://vapor-backend-sy48.onrender.com
       - key: APP_DEBUG
