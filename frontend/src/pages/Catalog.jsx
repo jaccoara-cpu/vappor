@@ -33,6 +33,13 @@ const Catalog = () => {
       setProducts(sortedProducts);
     } catch (err) {
       console.error('Error loading products:', err);
+      console.error('Error details:', {
+        message: err.message,
+        code: err.code,
+        response: err.response,
+        request: err.request,
+        config: err.config
+      });
       if (err.response) {
         // Server responded with error status
         console.error('Response status:', err.response.status);
@@ -41,6 +48,7 @@ const Catalog = () => {
       } else if (err.request) {
         // Request was made but no response received
         console.error('No response received:', err.request);
+        console.error('API URL was:', err.config?.url || 'unknown');
         setError('Не вдалося підключитися до сервера. Перевірте, чи запущений бекенд.');
       } else {
         // Something else happened
