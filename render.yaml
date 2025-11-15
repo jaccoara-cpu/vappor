@@ -34,6 +34,6 @@ services:
         value: error
     disk:
       name: vapor-storage
-      mountPath: /opt/render/project/src/backend/storage
+      mountPath: /var/www/html/storage
       sizeGB: 1
 
