@@ -28,6 +28,18 @@ COPY backend/ /var/www/html/
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+# Create .env file with basic configuration
+RUN echo "APP_NAME=VAPOR" > .env && \
+    echo "APP_ENV=production" >> .env && \
+    echo "APP_DEBUG=false" >> .env && \
+    echo "APP_TIMEZONE=Europe/Kiev" >> .env && \
+    echo "APP_LOCALE=ru" >> .env && \
+    echo "APP_FALLBACK_LOCALE=ru" >> .env && \
+    echo "DB_CONNECTION=sqlite" >> .env && \
+    echo "DB_DATABASE=/var/www/html/database/database.sqlite" >> .env && \
+    echo "LOG_CHANNEL=stack" >> .env && \
+    echo "LOG_LEVEL=error" >> .env
+
 # Create database file and ensure it's writable
 RUN touch database/database.sqlite && chmod 666 database/database.sqlite
 
