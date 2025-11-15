@@ -52,9 +52,13 @@ RUN echo "APP_NAME=VAPOR" > .env && \
 RUN chmod -R 777 storage bootstrap/cache database
 RUN chown -R www-data:www-data storage bootstrap/cache database
 
+# Copy and set up start script
+COPY backend/start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
 # Expose port (Render will set PORT env var)
 EXPOSE 8000
 
 # Start command (will be overridden by Render's startCommand)
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD ["/usr/local/bin/start.sh"]
 
