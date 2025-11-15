@@ -78,6 +78,10 @@ php -r "require 'vendor/autoload.php'; \$app = require_once 'bootstrap/app.php';
 echo "Running migrations..." >&2
 php artisan migrate --force
 
+# Create basic products if database is empty
+echo "Creating basic products..." >&2
+php artisan products:create-basic || echo "Product creation skipped (non-critical)" >&2
+
 # Now clear cache after database is ready
 echo "Clearing application cache..." >&2
 php artisan cache:clear || echo "Cache clear skipped (non-critical)" >&2

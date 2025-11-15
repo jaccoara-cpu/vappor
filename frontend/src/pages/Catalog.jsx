@@ -20,16 +20,54 @@ const Catalog = () => {
     try {
       setLoading(true);
       setError(null);
+      console.log('Loading products from API...');
       const response = await getProducts();
+      
+      console.log('Full API response:', response);
+      console.log('Response data:', response?.data);
+      console.log('Response data type:', typeof response?.data);
+      console.log('Is array:', Array.isArray(response?.data));
+      
+      // API возвращает массив напрямую из Laravel
+      let productsData = response?.data;
+      
+      // Обработка разных форматов ответа
+      if (!productsData) {
+        console.warn('No products data in response. Full response:', response);
+        productsData = [];
+      } else if (Array.isArray(productsData)) {
+        console.log('Products data is array, length:', productsData.length);
+        // Это массив - используем как есть
+      } else if (typeof productsData === 'object') {
+        console.log('Products data is object, keys:', Object.keys(productsData));
+        // Это объект - пытаемся извлечь массив
+        if (Array.isArray(productsData.data)) {
+          console.log('Found products in data property, length:', productsData.data.length);
+          productsData = productsData.data;
+        } else if (Array.isArray(productsData.items)) {
+          console.log('Found products in items property, length:', productsData.items.length);
+          productsData = productsData.items;
+        } else {
+          console.warn('Products data is not an array:', productsData);
+          productsData = [];
+        }
+      } else {
+        console.warn('Unexpected products data format:', productsData);
+        productsData = [];
+      }
+      
+      console.log('Loaded products:', productsData?.length || 0, 'items');
+      
       // Сортируем продукты: стіки і картриджі в конец
-      const sortedProducts = [...response.data].sort((a, b) => {
+      const sortedProducts = Array.isArray(productsData) ? [...productsData].sort((a, b) => {
         const aIsLast = a.category === 'Sticks for IQOS' || a.category === 'Cartridges';
         const bIsLast = b.category === 'Sticks for IQOS' || b.category === 'Cartridges';
         
         if (aIsLast && !bIsLast) return 1;
         if (!aIsLast && bIsLast) return -1;
         return 0;
-      });
+      }) : [];
+      
       setProducts(sortedProducts);
     } catch (err) {
       console.error('Error loading products:', err);

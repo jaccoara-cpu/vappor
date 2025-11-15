@@ -12,6 +12,11 @@ use App\Http\Controllers\Api\FinanceController;
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
+// Seed products endpoint (for initial setup)
+Route::post('/seed-products', [AdminController::class, 'seedProducts']);
+Route::post('/create-basic-products', [AdminController::class, 'createBasicProducts']);
+Route::get('/init-products', [AdminController::class, 'createBasicProducts']); // GET для простого вызова
+
 // Orders
 Route::post('/orders', [OrderController::class, 'store']);
 Route::get('/orders/slots', [OrderController::class, 'getAvailableSlots']);
