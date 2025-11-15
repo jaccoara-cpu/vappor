@@ -49,4 +49,6 @@ services:
       name: vapor-storage
       mountPath: /var/www/html/storage
       sizeGB: 1
+    # Also mount database directory to persistent storage
+    # Note: Database should be in persistent storage to survive restarts
 

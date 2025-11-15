@@ -29,6 +29,7 @@ COPY backend/ /var/www/html/
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Create .env file with basic configuration
+# Note: Environment variables from Render will override these values
 RUN echo "APP_NAME=VAPOR" > .env && \
     echo "APP_ENV=production" >> .env && \
     echo "APP_KEY=base64:KZ7ZcvhZd78pShCKFUQoHUmOKFdPXxay6HVTIqnerPI=" >> .env && \
@@ -40,10 +41,15 @@ RUN echo "APP_NAME=VAPOR" > .env && \
     echo "DB_DATABASE=/var/www/html/database/database.sqlite" >> .env && \
     echo "LOG_CHANNEL=stack" >> .env && \
     echo "LOG_LEVEL=error" >> .env && \
-    echo "SESSION_DRIVER=file" >> .env
+    echo "SESSION_DRIVER=file" >> .env && \
+    echo "TELEGRAM_BOT_TOKEN=8577074525:AAGusZJT_kPcjnOHVfRB22ZtJNteDGG1DlE" >> .env && \
+    echo "TELEGRAM_USER_ID=7736398733" >> .env
 
-# Create database file and ensure it's writable
-RUN touch database/database.sqlite && chmod 666 database/database.sqlite
+# Create database directory and file (will be created if not exists)
+# Note: Database file should be in persistent storage on Render
+RUN mkdir -p database && \
+    touch database/database.sqlite && \
+    chmod 666 database/database.sqlite
 
 # Set permissions
 RUN chmod -R 777 storage bootstrap/cache database
