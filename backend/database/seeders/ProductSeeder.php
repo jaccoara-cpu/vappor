@@ -296,6 +296,12 @@ class ProductSeeder extends Seeder
         
         // Обработка картриджей Vaporesso XROS
         $cartridgesPath = base_path('../photo cardridz');
+        if (!File::exists($cartridgesPath)) {
+            $cartridgesPath = base_path('../../photo cardridz');
+        }
+        if (!File::exists($cartridgesPath)) {
+            $cartridgesPath = storage_path('../photo cardridz');
+        }
         $cartridgeImagePath = null;
         
         if (File::exists($cartridgesPath)) {
