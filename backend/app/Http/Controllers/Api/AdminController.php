@@ -80,10 +80,31 @@ class AdminController extends Controller
 
     /**
      * Create basic products directly (for quick setup without images)
+     * Uses ProductSeeder to import images if folders exist
      */
     public function createBasicProducts(): JsonResponse
     {
         try {
+            // Сначала пытаемся использовать ProductSeeder, который импортирует изображения
+            try {
+                Artisan::call('db:seed', ['--class' => 'ProductSeeder', '--force' => true]);
+                $output = Artisan::output();
+                Log::info('Products seeded with images', ['output' => $output]);
+                
+                $activeCount = Product::where('is_active', true)->count();
+                
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Products created successfully with images using ProductSeeder',
+                    'active_products' => $activeCount,
+                    'output' => $output
+                ]);
+            } catch (\Exception $e) {
+                Log::warning('ProductSeeder failed, creating products without images', ['error' => $e->getMessage()]);
+                // Fallback: создаем товары без изображений
+            }
+            
+            // Fallback: создаем товары без изображений
             $products = [
                 [
                     'name' => 'Chaser for pods',

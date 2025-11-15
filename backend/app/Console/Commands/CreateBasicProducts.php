@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Product;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class CreateBasicProducts extends Command
 {
@@ -19,14 +20,39 @@ class CreateBasicProducts extends Command
      *
      * @var string
      */
-    protected $description = 'Create basic products in the database';
+    protected $description = 'Create basic products in the database with images';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $this->info('Creating basic products...');
+        $this->info('Creating products with images from ProductSeeder...');
+        
+        // Используем ProductSeeder, который импортирует изображения
+        try {
+            Artisan::call('db:seed', ['--class' => 'ProductSeeder', '--force' => true]);
+            $this->info('Products created successfully using ProductSeeder!');
+            
+            $activeCount = Product::where('is_active', true)->count();
+            $this->info("Total active products: {$activeCount}");
+            
+            return Command::SUCCESS;
+        } catch (\Exception $e) {
+            $this->warn('ProductSeeder failed, creating products without images...');
+            $this->error($e->getMessage());
+            
+            // Fallback: создаем товары без изображений
+            return $this->createProductsWithoutImages();
+        }
+    }
+    
+    /**
+     * Fallback method to create products without images
+     */
+    private function createProductsWithoutImages()
+    {
+        $this->info('Creating basic products without images...');
 
         $products = [
             [
