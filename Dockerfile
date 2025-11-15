@@ -39,7 +39,8 @@ RUN echo "APP_NAME=VAPOR" > .env && \
     echo "DB_CONNECTION=sqlite" >> .env && \
     echo "DB_DATABASE=/var/www/html/database/database.sqlite" >> .env && \
     echo "LOG_CHANNEL=stack" >> .env && \
-    echo "LOG_LEVEL=error" >> .env
+    echo "LOG_LEVEL=error" >> .env && \
+    echo "SESSION_DRIVER=file" >> .env
 
 # Create database file and ensure it's writable
 RUN touch database/database.sqlite && chmod 666 database/database.sqlite
