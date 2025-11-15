@@ -7,16 +7,11 @@ services:
     plan: free
     buildCommand: |
       php artisan key:generate --force --show || true &&
-      touch /var/www/html/database/database.sqlite &&
-      chmod 666 /var/www/html/database/database.sqlite &&
-      php artisan migrate --force &&
       php artisan storage:link &&
       php artisan config:clear &&
       php artisan cache:clear
     preDeployCommand: |
-      touch /var/www/html/database/database.sqlite &&
-      chmod 666 /var/www/html/database/database.sqlite &&
-      php artisan migrate --force
+      php artisan migrate --force || true
     startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
     envVars:
       - key: APP_ENV
