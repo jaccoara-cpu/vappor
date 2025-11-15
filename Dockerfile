@@ -25,6 +25,16 @@ WORKDIR /var/www/html
 # Copy backend directory
 COPY backend/ /var/www/html/
 
+# Copy product photos folders (they will be in /var/www/html/../photos liquid etc)
+# But we need them accessible from backend, so copy to a location ProductSeeder can find
+# ProductSeeder looks for: base_path('../photos liquid')
+# So we need photos folders one level up from /var/www/html
+WORKDIR /var/www
+COPY "photos liquid" "photos liquid"
+COPY "photos iqos" "photos iqos"
+COPY "photo cardridz" "photo cardridz"
+WORKDIR /var/www/html
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
