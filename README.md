@@ -1,32 +1,32 @@
-# VAPOR - Система управления заказами
+# VAPOR - Order Management System
 
-Инструкция по настройке и запуску проекта для Мирослава.
+Setup and deployment guide for the VAPOR order management system.
 
-## 📋 Содержание
+## 📋 Table of Contents
 
-1. [Требования](#требования)
-2. [Установка](#установка)
-3. [Настройка Backend (Laravel)](#настройка-backend-laravel)
-4. [Настройка Frontend (React)](#настройка-frontend-react)
-5. [Настройка Telegram бота](#настройка-telegram-бота)
-6. [Запуск проекта](#запуск-проекта)
-7. [Структура проекта](#структура-проекта)
-8. [Возможные проблемы](#возможные-проблемы)
+1. [Requirements](#requirements)
+2. [Installation](#installation)
+3. [Backend Setup (Laravel)](#backend-setup-laravel)
+4. [Frontend Setup (React)](#frontend-setup-react)
+5. [Telegram Bot Setup](#telegram-bot-setup)
+6. [Running the Project](#running-the-project)
+7. [Project Structure](#project-structure)
+8. [Troubleshooting](#troubleshooting)
 
 ---
 
-## 🛠 Требования
+## 🛠 Requirements
 
-Перед началом работы убедитесь, что у вас установлены:
+Before starting, make sure you have the following installed:
 
-- **PHP** версии 8.2 или выше
-- **Composer** (менеджер зависимостей для PHP)
-- **Node.js** версии 18 или выше
-- **npm** (обычно устанавливается вместе с Node.js)
-- **SQLite** (используется для базы данных)
-- **Git** (для клонирования репозитория)
+- **PHP** version 8.2 or higher
+- **Composer** (PHP dependency manager)
+- **Node.js** version 18 or higher
+- **npm** (usually installed with Node.js)
+- **SQLite** (used for database)
+- **Git** (for cloning the repository)
 
-Проверить установку можно командами:
+You can check the installation with:
 ```bash
 php -v
 composer -v
@@ -36,47 +36,52 @@ npm -v
 
 ---
 
-## 📦 Установка
+## 📦 Installation
 
-### 1. Клонирование репозитория
+### 1. Clone the Repository
 
-Если проект еще не скачан, скопируйте папку проекта на ваш компьютер.
+If the project is not already downloaded, clone it to your computer:
 
-### 2. Открытие проекта
-
-Откройте терминал и перейдите в папку проекта:
 ```bash
-cd "путь/к/проекту"
+git clone https://github.com/jaccoara-cpu/vpror.git
+cd vpror
+```
+
+### 2. Open the Project
+
+Open a terminal and navigate to the project folder:
+```bash
+cd "path/to/project"
 ```
 
 ---
 
-## ⚙️ Настройка Backend (Laravel)
+## ⚙️ Backend Setup (Laravel)
 
-### Шаг 1: Установка зависимостей PHP
+### Step 1: Install PHP Dependencies
 
-Перейдите в папку `backend` и установите зависимости:
+Navigate to the `backend` folder and install dependencies:
 
 ```bash
 cd backend
 composer install
 ```
 
-### Шаг 2: Настройка переменных окружения
+### Step 2: Configure Environment Variables
 
-Создайте файл `.env` на основе примера (если его еще нет):
+Create a `.env` file based on the example (if it doesn't exist):
 
 ```bash
-# На Windows
+# On Windows
 copy .env.example .env
 
-# На Mac/Linux
+# On Mac/Linux
 cp .env.example .env
 ```
 
-Откройте файл `.env` в текстовом редакторе и настройте следующие параметры:
+Open the `.env` file in a text editor and configure the following parameters:
 
-#### Базовая конфигурация приложения:
+#### Basic Application Configuration:
 
 ```env
 APP_NAME="VAPOR"
@@ -90,56 +95,56 @@ APP_FALLBACK_LOCALE=ru
 APP_FAKER_LOCALE=ru_UA
 ```
 
-#### База данных (SQLite):
+#### Database (SQLite):
 
 ```env
 DB_CONNECTION=sqlite
-DB_DATABASE=/путь/к/проекту/backend/database/database.sqlite
+DB_DATABASE=/path/to/project/backend/database/database.sqlite
 ```
 
-⚠️ **Важно:** Убедитесь, что файл `database/database.sqlite` существует. Если его нет, создайте пустой файл:
+⚠️ **Important:** Make sure the `database/database.sqlite` file exists. If it doesn't, create an empty file:
 
 ```bash
-# На Mac/Linux
+# On Mac/Linux
 touch database/database.sqlite
 
-# На Windows создайте пустой файл database.sqlite в папке database
+# On Windows, create an empty database.sqlite file in the database folder
 ```
 
-#### Настройка Telegram (пока пропустите, настройте после создания бота):
+#### Telegram Configuration (skip for now, configure after creating the bot):
 
 ```env
-TELEGRAM_BOT_TOKEN=ваш_токен_бота
-TELEGRAM_USER_ID=ваш_telegram_id
+TELEGRAM_BOT_TOKEN=your_bot_token
+TELEGRAM_USER_ID=your_telegram_id
 ```
 
-### Шаг 3: Генерация ключа приложения
+### Step 3: Generate Application Key
 
-Выполните команду:
+Run the command:
 
 ```bash
 php artisan key:generate
 ```
 
-Эта команда автоматически добавит `APP_KEY` в файл `.env`.
+This command will automatically add `APP_KEY` to the `.env` file.
 
-### Шаг 4: Запуск миграций базы данных
+### Step 4: Run Database Migrations
 
-Создайте таблицы в базе данных:
+Create database tables:
 
 ```bash
 php artisan migrate
 ```
 
-Если нужно заполнить базу тестовыми данными (опционально):
+If you need to populate the database with test data (optional):
 
 ```bash
 php artisan db:seed
 ```
 
-### Шаг 5: Создание символической ссылки для хранения файлов
+### Step 5: Create Symbolic Link for File Storage
 
-Создайте ссылку для доступа к загруженным изображениям:
+Create a link to access uploaded images:
 
 ```bash
 php artisan storage:link
@@ -147,86 +152,86 @@ php artisan storage:link
 
 ---
 
-## ⚛️ Настройка Frontend (React)
+## ⚛️ Frontend Setup (React)
 
-### Шаг 1: Установка зависимостей
+### Step 1: Install Dependencies
 
-Откройте новый терминал и перейдите в папку `frontend`:
+Open a new terminal and navigate to the `frontend` folder:
 
 ```bash
 cd frontend
 npm install
 ```
 
-### Шаг 2: Настройка переменных окружения
+### Step 2: Configure Environment Variables
 
-Создайте файл `.env` в папке `frontend` (если его нет):
+Create a `.env` file in the `frontend` folder (if it doesn't exist):
 
 ```bash
-# На Windows
+# On Windows
 echo VITE_API_URL=http://localhost:8000/api > .env
 
-# На Mac/Linux
+# On Mac/Linux
 echo "VITE_API_URL=http://localhost:8000/api" > .env
 ```
 
-Или создайте файл `.env` вручную со следующим содержимым:
+Or create the `.env` file manually with the following content:
 
 ```env
 VITE_API_URL=http://localhost:8000/api
 ```
 
-Этот файл указывает frontend, куда отправлять API запросы.
+This file tells the frontend where to send API requests.
 
 ---
 
-## 🤖 Настройка Telegram бота
+## 🤖 Telegram Bot Setup
 
-### Шаг 1: Создание Telegram бота
+### Step 1: Create a Telegram Bot
 
-1. Откройте Telegram и найдите бота [@BotFather](https://t.me/BotFather)
-2. Отправьте команду `/newbot`
-3. Следуйте инструкциям:
-   - Укажите имя бота (например: "VAPOR Admin Bot")
-   - Укажите username бота (должен заканчиваться на `bot`, например: `vapor_admin_bot`)
-4. BotFather предоставит вам **токен бота** (выглядит как `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`)
-5. **Сохраните токен** — он понадобится позже
+1. Open Telegram and find [@BotFather](https://t.me/BotFather)
+2. Send the command `/newbot`
+3. Follow the instructions:
+   - Enter the bot name (e.g., "VAPOR Admin Bot")
+   - Enter the bot username (must end with `bot`, e.g., `vapor_admin_bot`)
+4. BotFather will provide you with a **bot token** (looks like `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`)
+5. **Save the token** — you'll need it later
 
-### Шаг 2: Получение вашего Telegram ID
+### Step 2: Get Your Telegram ID
 
-Чтобы бот мог отправлять вам сообщения, нужно узнать ваш Telegram ID:
+To allow the bot to send you messages, you need to know your Telegram ID:
 
-#### Способ 1: Через бота @userinfobot (РЕКОМЕНДУЕТСЯ)
-1. Найдите бота [@userinfobot](https://t.me/userinfobot) в Telegram
-2. Начните с ним чат (нажмите `/start`)
-3. Бот отправит вам ваш ID — это число (например: `7736398733`)
-4. **Сохраните это число**
+#### Method 1: Via @userinfobot (RECOMMENDED)
+1. Find [@userinfobot](https://t.me/userinfobot) in Telegram
+2. Start a chat with it (press `/start`)
+3. The bot will send you your ID — it's a number (e.g., `7736398733`)
+4. **Save this number**
 
-#### Способ 2: Через созданного бота
-1. Найдите созданного вами бота в Telegram
-2. Начните с ним чат (нажмите `/start`)
-3. Важно: **Бот должен получить сообщение от вас**, иначе он не сможет отправлять вам сообщения
+#### Method 2: Via Your Created Bot
+1. Find your created bot in Telegram
+2. Start a chat with it (press `/start`)
+3. Important: **The bot must receive a message from you**, otherwise it won't be able to send you messages
 
-### Шаг 3: Добавление токена и ID в файл `.env`
+### Step 3: Add Token and ID to `.env` File
 
-**📌 ВАЖНО: Куда именно вставлять данные Telegram бота**
+**📌 IMPORTANT: Where to insert Telegram bot data**
 
-1. Откройте файл `backend/.env` в любом текстовом редакторе (Блокнот, VS Code, и т.д.)
+1. Open the `backend/.env` file in any text editor (Notepad, VS Code, etc.)
 
-2. Найдите или добавьте следующие строки в файле `.env`:
+2. Find or add the following lines in the `.env` file:
 
    ```
    TELEGRAM_BOT_TOKEN=
    TELEGRAM_USER_ID=
    ```
 
-3. **После знака `=` (равно) вставьте ваши данные:**
+3. **After the `=` (equals) sign, insert your data:**
 
-   - **В строку `TELEGRAM_BOT_TOKEN=`** вставьте токен, который вы получили от BotFather
+   - **In the `TELEGRAM_BOT_TOKEN=` line**, insert the token you received from BotFather
    
-   - **В строку `TELEGRAM_USER_ID=`** вставьте ваш Telegram ID (число)
+   - **In the `TELEGRAM_USER_ID=` line**, insert your Telegram ID (number)
 
-**Пример правильной записи в файле `.env`:**
+**Example of correct entry in the `.env` file:**
 
 ```env
 # Telegram Bot Configuration
@@ -234,96 +239,96 @@ TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
 TELEGRAM_USER_ID=7736398733
 ```
 
-**⚠️ ВАЖНО:**
-- НЕ ставьте пробелы до и после знака `=`
-- НЕ ставьте кавычки вокруг значений
-- Каждая строка должна быть на новой строке
-- Токен и ID должны быть без пробелов
+**⚠️ IMPORTANT:**
+- DO NOT put spaces before or after the `=` sign
+- DO NOT put quotes around values
+- Each line should be on a new line
+- Token and ID should be without spaces
 
-### Шаг 4: Проверка работы бота
+### Step 4: Test the Bot
 
-1. Убедитесь, что вы отправили `/start` вашему боту в Telegram
-2. Перезапустите backend сервер (если он запущен)
-3. Попробуйте создать тестовый заказ через сайт — уведомление должно прийти в Telegram
+1. Make sure you sent `/start` to your bot in Telegram
+2. Restart the backend server (if it's running)
+3. Try creating a test order through the website — a notification should arrive in Telegram
 
-### Важные замечания о Telegram боте:
+### Important Notes About the Telegram Bot:
 
-- ⚠️ **Бот должен получить сообщение от вас**, прежде чем он сможет отправлять вам сообщения
-- ⚠️ Используйте **числовой ID**, а не username (username может не работать)
-- ⚠️ Токен бота — это секретная информация, не делитесь им публично
-- ⚠️ После изменения `.env` файла нужно **перезапустить backend сервер**
-
----
-
-## 🚀 Запуск проекта
-
-### ⚡ Быстрый старт (пошаговая инструкция)
-
-Для запуска сайта нужно запустить **два сервера одновременно**:
-- **Backend (Laravel)** — обрабатывает запросы и работает с базой данных
-- **Frontend (React)** — отображает интерфейс сайта
+- ⚠️ **The bot must receive a message from you** before it can send you messages
+- ⚠️ Use a **numeric ID**, not username (username may not work)
+- ⚠️ The bot token is secret information, don't share it publicly
+- ⚠️ After changing the `.env` file, you need to **restart the backend server**
 
 ---
 
-### 📝 Вариант 1: Ручной запуск (РЕКОМЕНДУЕТСЯ для начала)
+## 🚀 Running the Project
 
-#### Шаг 1: Запуск Backend сервера
+### ⚡ Quick Start (Step-by-Step Guide)
 
-1. Откройте **первый терминал** (окно командной строки)
+To run the website, you need to start **two servers simultaneously**:
+- **Backend (Laravel)** — processes requests and works with the database
+- **Frontend (React)** — displays the website interface
+
+---
+
+### 📝 Option 1: Manual Start (RECOMMENDED for beginners)
+
+#### Step 1: Start Backend Server
+
+1. Open the **first terminal** (command line window)
    
-   **На Windows:** Откройте Command Prompt или PowerShell  
-   **На Mac/Linux:** Откройте Terminal
+   **On Windows:** Open Command Prompt or PowerShell  
+   **On Mac/Linux:** Open Terminal
 
-2. Перейдите в папку `backend`:
+2. Navigate to the `backend` folder:
    ```bash
    cd backend
    ```
    
-   ⚠️ Если проект находится не в текущей папке, используйте полный путь:
+   ⚠️ If the project is not in the current folder, use the full path:
    ```bash
-   cd "C:\путь\к\проекту\backend"    # Windows
-   cd "/путь/к/проекту/backend"      # Mac/Linux
+   cd "C:\path\to\project\backend"    # Windows
+   cd "/path/to/project/backend"      # Mac/Linux
    ```
 
-3. Запустите сервер командой:
+3. Start the server with:
    ```bash
    php artisan serve
    ```
 
-4. Вы должны увидеть сообщение:
+4. You should see a message:
    ```
    INFO  Server running on [http://127.0.0.1:8000]
    ```
    
-   ✅ **Backend запущен!** Теперь он доступен по адресу: `http://localhost:8000`
+   ✅ **Backend is running!** It's now available at: `http://localhost:8000`
    
-   ⚠️ **НЕ ЗАКРЫВАЙТЕ ЭТОТ ТЕРМИНАЛ!** Оставьте его работать.
+   ⚠️ **DO NOT CLOSE THIS TERMINAL!** Leave it running.
 
 ---
 
-#### Шаг 2: Запуск Frontend сервера
+#### Step 2: Start Frontend Server
 
-1. Откройте **второй терминал** (новое окно командной строки)
+1. Open a **second terminal** (new command line window)
    
-   ⚠️ **Важно:** Это должен быть **НОВЫЙ** терминал, первый терминал должен продолжать работать!
+   ⚠️ **Important:** This must be a **NEW** terminal, the first terminal should continue running!
 
-2. Перейдите в папку `frontend`:
+2. Navigate to the `frontend` folder:
    ```bash
    cd frontend
    ```
    
-   ⚠️ Если проект находится не в текущей папке, используйте полный путь:
+   ⚠️ If the project is not in the current folder, use the full path:
    ```bash
-   cd "C:\путь\к\проекту\frontend"    # Windows
-   cd "/путь/к/проекту/frontend"      # Mac/Linux
+   cd "C:\path\to\project\frontend"    # Windows
+   cd "/path/to/project/frontend"      # Mac/Linux
    ```
 
-3. Запустите сервер командой:
+3. Start the server with:
    ```bash
    npm run dev
    ```
 
-4. Вы должны увидеть сообщение примерно такое:
+4. You should see a message like:
    ```
    VITE v5.x.x  ready in xxx ms
 
@@ -331,175 +336,175 @@ TELEGRAM_USER_ID=7736398733
    ➜  Network: use --host to expose
    ```
    
-   ✅ **Frontend запущен!** Теперь он доступен по адресу: `http://localhost:5173`
+   ✅ **Frontend is running!** It's now available at: `http://localhost:5173`
    
-   ⚠️ **НЕ ЗАКРЫВАЙТЕ ЭТОТ ТЕРМИНАЛ!** Оставьте его работать.
+   ⚠️ **DO NOT CLOSE THIS TERMINAL!** Leave it running.
 
 ---
 
-#### Шаг 3: Открытие сайта в браузере
+#### Step 3: Open the Website in Browser
 
-1. Откройте любой браузер (Chrome, Firefox, Safari, и т.д.)
+1. Open any browser (Chrome, Firefox, Safari, etc.)
 
-2. В адресной строке введите:
+2. In the address bar, enter:
    ```
    http://localhost:5173
    ```
    
-   или просто нажмите на ссылку в терминале, если она кликабельна
+   or simply click on the link in the terminal if it's clickable
 
-3. ✅ **Сайт должен загрузиться!**
+3. ✅ **The website should load!**
 
 ---
 
-### 📋 Вариант 2: Использование скрипта Composer (для продвинутых пользователей)
+### 📋 Option 2: Using Composer Script (for advanced users)
 
-Этот вариант запускает все сервисы одной командой, но требует больше ресурсов.
+This option runs all services with one command, but requires more resources.
 
-1. Откройте терминал в папке `backend`:
+1. Open a terminal in the `backend` folder:
    ```bash
    cd backend
    ```
 
-2. Запустите команду:
+2. Run the command:
    ```bash
    composer run dev
    ```
 
-Этот скрипт запустит автоматически:
-- ✅ Backend сервер (Laravel) на порту 8000
-- ✅ Очередь заданий (queue)
-- ✅ Логи (pail)
-- ✅ Frontend (Vite) на порту 5173
+This script will automatically start:
+- ✅ Backend server (Laravel) on port 8000
+- ✅ Queue worker
+- ✅ Logs (pail)
+- ✅ Frontend (Vite) on port 5173
 
-**После запуска:**
-- Откройте браузер и перейдите на `http://localhost:5173`
-- Сайт должен загрузиться и работать
+**After starting:**
+- Open a browser and go to `http://localhost:5173`
+- The website should load and work
 
 ---
 
-### 🛑 Как остановить серверы
+### 🛑 How to Stop Servers
 
-Чтобы остановить серверы:
+To stop the servers:
 
-1. В терминале, где запущен сервер, нажмите:
-   - **Ctrl + C** (на Windows/Mac/Linux)
+1. In the terminal where the server is running, press:
+   - **Ctrl + C** (on Windows/Mac/Linux)
    
-2. Подтвердите остановку, если потребуется
+2. Confirm the stop if prompted
 
-3. Повторите для каждого запущенного терминала
-
----
-
-### ✅ Проверка работы
-
-После запуска обоих серверов проверьте:
-
-1. **Backend работает:**
-   - Откройте в браузере: `http://localhost:8000`
-   - Должна загрузиться страница Laravel (или API ответ)
-
-2. **Frontend работает:**
-   - Откройте в браузере: `http://localhost:5173`
-   - Должен загрузиться сайт VAPOR
-
-3. **Оба сервера запущены одновременно:**
-   - Два терминала должны быть открыты и работать
-   - В первом терминале должен быть запущен `php artisan serve`
-   - Во втором терминале должен быть запущен `npm run dev`
+3. Repeat for each running terminal
 
 ---
 
-## 📁 Структура проекта
+### ✅ Verification
+
+After starting both servers, check:
+
+1. **Backend is working:**
+   - Open in browser: `http://localhost:8000`
+   - Laravel page (or API response) should load
+
+2. **Frontend is working:**
+   - Open in browser: `http://localhost:5173`
+   - VAPOR website should load
+
+3. **Both servers are running simultaneously:**
+   - Two terminals should be open and running
+   - First terminal should have `php artisan serve` running
+   - Second terminal should have `npm run dev` running
+
+---
+
+## 📁 Project Structure
 
 ```
-zalupa 2/
+vpror/
 ├── backend/              # Laravel backend
 │   ├── app/
 │   │   ├── Http/
-│   │   │   ├── Controllers/    # Контроллеры API
-│   │   │   └── Middleware/     # Middleware (авторизация и т.д.)
-│   │   ├── Models/             # Модели базы данных
+│   │   │   ├── Controllers/    # API Controllers
+│   │   │   └── Middleware/     # Middleware (authorization, etc.)
+│   │   ├── Models/             # Database models
 │   │   └── Services/
-│   │       └── TelegramService.php  # Сервис для работы с Telegram
+│   │       └── TelegramService.php  # Telegram service
 │   ├── config/
-│   │   ├── services.php        # Конфигурация Telegram
-│   │   └── database.php        # Конфигурация БД
+│   │   ├── services.php        # Telegram configuration
+│   │   └── database.php        # Database configuration
 │   ├── database/
-│   │   ├── database.sqlite     # База данных SQLite
-│   │   ├── migrations/         # Миграции БД
-│   │   └── seeders/            # Сидеры (тестовые данные)
+│   │   ├── database.sqlite     # SQLite database
+│   │   ├── migrations/         # Database migrations
+│   │   └── seeders/            # Seeders (test data)
 │   ├── routes/
-│   │   └── api.php             # API маршруты
-│   └── .env                    # Переменные окружения (создать!)
+│   │   └── api.php             # API routes
+│   └── .env                    # Environment variables (create!)
 │
 └── frontend/            # React frontend
     ├── src/
-    │   ├── api.js              # API клиент
-    │   ├── pages/              # Страницы приложения
-    │   └── components/         # React компоненты
-    └── .env                    # Переменные окружения (создать!)
+    │   ├── api.js              # API client
+    │   ├── pages/              # Application pages
+    │   └── components/         # React components
+    └── .env                    # Environment variables (create!)
 ```
 
 ---
 
-## 🔧 Возможные проблемы
+## 🔧 Troubleshooting
 
-### Проблема: "Class not found" или ошибки Composer
+### Problem: "Class not found" or Composer errors
 
-**Решение:**
+**Solution:**
 ```bash
 cd backend
 composer install --no-interaction
 ```
 
-### Проблема: "APP_KEY not set" при запуске
+### Problem: "APP_KEY not set" on startup
 
-**Решение:**
+**Solution:**
 ```bash
 cd backend
 php artisan key:generate
 ```
 
-### Проблема: База данных не найдена
+### Problem: Database not found
 
-**Решение:**
+**Solution:**
 ```bash
 cd backend
 touch database/database.sqlite
 php artisan migrate
 ```
 
-### Проблема: Frontend не подключается к Backend
+### Problem: Frontend can't connect to Backend
 
-**Проверьте:**
-1. Backend запущен (`php artisan serve`)
-2. В `frontend/.env` указан правильный `VITE_API_URL`
-3. CORS настроен правильно (по умолчанию разрешен `localhost:5173`)
+**Check:**
+1. Backend is running (`php artisan serve`)
+2. `frontend/.env` has the correct `VITE_API_URL`
+3. CORS is configured correctly (by default allows `localhost:5173`)
 
-### Проблема: Telegram бот не отправляет сообщения
+### Problem: Telegram bot doesn't send messages
 
-**Проверьте:**
-1. Токен бота указан правильно в `backend/.env`
-2. Ваш Telegram ID указан правильно
-3. Вы отправили `/start` боту в Telegram
-4. Проверьте логи: `backend/storage/logs/laravel.log`
+**Check:**
+1. Bot token is correctly set in `backend/.env`
+2. Your Telegram ID is correctly set
+3. You sent `/start` to the bot in Telegram
+4. Check logs: `backend/storage/logs/laravel.log`
 
-### Проблема: Изображения не загружаются
+### Problem: Images don't load
 
-**Решение:**
+**Solution:**
 ```bash
 cd backend
 php artisan storage:link
 ```
 
-Убедитесь, что папка `backend/storage/app/public` существует и доступна для записи.
+Make sure the `backend/storage/app/public` folder exists and is writable.
 
 ---
 
-## 📝 Дополнительные команды
+## 📝 Additional Commands
 
-### Очистка кэша Laravel:
+### Clear Laravel Cache:
 
 ```bash
 cd backend
@@ -509,36 +514,35 @@ php artisan route:clear
 php artisan view:clear
 ```
 
-### Просмотр логов:
+### View Logs:
 
-Логи Laravel находятся в: `backend/storage/logs/laravel.log`
+Laravel logs are located at: `backend/storage/logs/laravel.log`
 
-### Проверка базы данных:
+### Check Database:
 
-Можно использовать SQLite браузеры или команду:
-
+You can use SQLite browsers or the command:
 ```bash
 cd backend
 php artisan tinker
 ```
 
-Затем в tinker можно выполнять команды для работы с базой данных.
+Then in tinker you can execute commands to work with the database.
 
 ---
 
-## 🎯 Быстрый старт (краткая версия)
+## 🎯 Quick Start (Brief Version)
 
-1. Установите зависимости:
+1. Install dependencies:
    ```bash
    cd backend && composer install
    cd ../frontend && npm install
    ```
 
-2. Настройте `.env` файлы:
-   - `backend/.env` - настройте базу данных и Telegram
-   - `frontend/.env` - укажите `VITE_API_URL=http://localhost:8000/api`
+2. Configure `.env` files:
+   - `backend/.env` - configure database and Telegram
+   - `frontend/.env` - set `VITE_API_URL=http://localhost:8000/api`
 
-3. Создайте базу данных:
+3. Create database:
    ```bash
    cd backend
    touch database/database.sqlite
@@ -547,31 +551,30 @@ php artisan tinker
    php artisan storage:link
    ```
 
-4. Создайте Telegram бота и добавьте токен в `backend/.env`
+4. Create Telegram bot and add token to `backend/.env`
 
-5. Запустите проект:
+5. Run the project:
    ```bash
-   # Терминал 1 - Backend
+   # Terminal 1 - Backend
    cd backend
    php artisan serve
    
-   # Терминал 2 - Frontend
+   # Terminal 2 - Frontend
    cd frontend
    npm run dev
    ```
 
-6. Откройте браузер: `http://localhost:5173`
+6. Open browser: `http://localhost:5173`
 
 ---
 
-## 📞 Поддержка
+## 📞 Support
 
-Если возникли проблемы, проверьте:
-1. Все зависимости установлены
-2. Все `.env` файлы настроены
-3. База данных создана и миграции выполнены
-4. Telegram бот создан и вы начали с ним чат
-5. Оба сервера (backend и frontend) запущены
+If you encounter problems, check:
+1. All dependencies are installed
+2. All `.env` files are configured
+3. Database is created and migrations are run
+4. Telegram bot is created and you started a chat with it
+5. Both servers (backend and frontend) are running
 
-**Удачи с настройкой! 🚀**
-
+**Good luck with setup! 🚀**
