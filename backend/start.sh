@@ -14,8 +14,13 @@ ls -la /var/www/html/storage/ || echo "Storage directory does not exist!" >&2
 
 # Ensure storage directory exists and has correct permissions
 echo "Creating storage directory if needed..." >&2
-mkdir -p /var/www/html/storage
+mkdir -p /var/www/html/storage/app/public
 chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Create storage link for public access to images
+echo "Creating storage symbolic link..." >&2
+php artisan storage:link || echo "Storage link may already exist" >&2
+ls -la /var/www/html/public/storage || echo "WARNING: Storage link not created" >&2
 
 # Check if persistent disk is mounted
 echo "Checking persistent disk mount..." >&2
