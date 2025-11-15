@@ -15,8 +15,20 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        // Путь к папке с фото относительно корня проекта
+        // Путь к папке с фото - пробуем разные варианты
+        // На продакшн папки будут в корне проекта (на уровень выше от backend)
+        // Локально тоже на уровень выше от backend
         $photosPath = base_path('../photos liquid');
+        
+        // Если не найдено, пробуем в корне проекта
+        if (!File::exists($photosPath)) {
+            $photosPath = base_path('../../photos liquid');
+        }
+        
+        // Если все еще не найдено, пробуем абсолютный путь от storage
+        if (!File::exists($photosPath)) {
+            $photosPath = storage_path('../photos liquid');
+        }
         
         // Создаем директорию для продуктов если её нет
         $destinationPath = storage_path('app/public/products');
@@ -160,6 +172,12 @@ class ProductSeeder extends Seeder
         
         // Обработка стіків для IQOS
         $iqosPhotosPath = base_path('../photos iqos');
+        if (!File::exists($iqosPhotosPath)) {
+            $iqosPhotosPath = base_path('../../photos iqos');
+        }
+        if (!File::exists($iqosPhotosPath)) {
+            $iqosPhotosPath = storage_path('../photos iqos');
+        }
         $iqosFlavors = [];
         
         // Популярні назви смаків для IQOS стіків
