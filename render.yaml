@@ -7,9 +7,12 @@ services:
     buildCommand: |
       cd backend &&
       composer install --no-dev --optimize-autoloader &&
+      touch database/database.sqlite &&
       php artisan key:generate --force &&
       php artisan migrate --force &&
-      php artisan storage:link
+      php artisan storage:link &&
+      php artisan config:cache &&
+      php artisan route:cache
     startCommand: |
       cd backend &&
       php artisan serve --host=0.0.0.0 --port=$PORT
@@ -26,6 +29,8 @@ services:
         value: ru
       - key: DB_CONNECTION
         value: sqlite
+      - key: DB_DATABASE
+        value: /opt/render/project/src/backend/database/database.sqlite
       - key: LOG_CHANNEL
         value: stack
       - key: LOG_LEVEL
