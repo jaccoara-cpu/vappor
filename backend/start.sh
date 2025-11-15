@@ -1,35 +1,55 @@
 #!/bin/bash
 set -e
 
-echo "Starting VAPOR backend..."
+echo "=== Starting VAPOR backend ==="
+echo "Current directory: $(pwd)"
+echo "PORT: ${PORT:-8000}"
+
+# Check if storage directory exists
+echo "Checking storage directory..."
+ls -la /var/www/html/storage/ || echo "Storage directory does not exist!"
 
 # Ensure storage directory exists and has correct permissions
+echo "Creating storage directory if needed..."
 mkdir -p /var/www/html/storage
 chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Create database file in persistent storage if it doesn't exist
-if [ ! -f /var/www/html/storage/database.sqlite ]; then
+# Check if persistent disk is mounted
+echo "Checking persistent disk mount..."
+df -h | grep storage || echo "WARNING: Persistent disk may not be mounted"
+
+# Create database file in persistent storage
+DB_PATH="/var/www/html/storage/database.sqlite"
+echo "Database path: $DB_PATH"
+
+if [ ! -f "$DB_PATH" ]; then
     echo "Creating database file..."
-    touch /var/www/html/storage/database.sqlite
-    chmod 666 /var/www/html/storage/database.sqlite
-    echo "Database file created at /var/www/html/storage/database.sqlite"
-    ls -la /var/www/html/storage/database.sqlite || echo "ERROR: Database file was not created!"
+    touch "$DB_PATH"
+    chmod 666 "$DB_PATH"
+    echo "Database file created"
+    ls -la "$DB_PATH" || echo "ERROR: Database file was not created!"
 else
-    echo "Database file already exists at /var/www/html/storage/database.sqlite"
-    ls -la /var/www/html/storage/database.sqlite
+    echo "Database file already exists"
+    ls -la "$DB_PATH"
+fi
+
+# Verify file was created
+if [ ! -f "$DB_PATH" ]; then
+    echo "CRITICAL ERROR: Database file does not exist after creation attempt!"
+    echo "Trying to create in current directory..."
+    touch ./database.sqlite
+    chmod 666 ./database.sqlite
+    ls -la ./database.sqlite
+    exit 1
 fi
 
 # Run migrations
 echo "Running migrations..."
-php artisan migrate --force || echo "WARNING: Migrations failed, but continuing..."
+php artisan migrate --force
 
-# Verify database file exists before starting server
-if [ ! -f /var/www/html/storage/database.sqlite ]; then
-    echo "ERROR: Database file does not exist! Creating it now..."
-    touch /var/www/html/storage/database.sqlite
-    chmod 666 /var/www/html/storage/database.sqlite
-    php artisan migrate --force
-fi
+# Verify migrations succeeded
+echo "Verifying database..."
+php artisan db:show || echo "WARNING: Could not verify database"
 
 # Start the server
 echo "Starting Laravel server on port ${PORT:-8000}..."
