@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: vapor-backend
+    env: php
+    region: frankfurt
+    plan: free
+    buildCommand: |
+      cd backend &&
+      composer install --no-dev --optimize-autoloader &&
+      php artisan key:generate --force &&
+      php artisan migrate --force &&
+      php artisan storage:link
+    startCommand: |
+      cd backend &&
+      php artisan serve --host=0.0.0.0 --port=$PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_TIMEZONE
+        value: Europe/Kiev
+      - key: APP_LOCALE
+        value: ru
+      - key: APP_FALLBACK_LOCALE
+        value: ru
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: LOG_CHANNEL
+        value: stack
+      - key: LOG_LEVEL
+        value: error
+    disk:
+      name: vapor-storage
+      mountPath: /opt/render/project/src/backend/storage
+      sizeGB: 1
+
