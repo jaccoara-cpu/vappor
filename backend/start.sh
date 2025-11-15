@@ -46,6 +46,15 @@ if [ ! -f "$DB_PATH" ]; then
     exit 1
 fi
 
+# Clear config cache to ensure environment variables are loaded
+echo "Clearing config cache..." >&2
+php artisan config:clear
+php artisan cache:clear
+
+# Verify DB_DATABASE is set correctly
+echo "Checking DB_DATABASE environment variable..." >&2
+php artisan tinker --execute="echo config('database.connections.sqlite.database');" || echo "DB_DATABASE: $DB_DATABASE" >&2
+
 # Run migrations
 echo "Running migrations..." >&2
 php artisan migrate --force
