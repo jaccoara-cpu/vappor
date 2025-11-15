@@ -1,0 +1,57 @@
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.backup
+
+# IDE
+.idea/
+.vscode/
+.fleet/
+.phpactor.json
+.phpunit.result.cache
+.phpunit.cache
+.nova/
+.zed/
+
+# Backend (Laravel)
+backend/vendor/
+backend/node_modules/
+backend/public/build/
+backend/public/hot/
+backend/public/storage
+backend/storage/*.key
+backend/storage/pail
+backend/bootstrap/cache/*
+!backend/bootstrap/cache/.gitignore
+backend/.phpunit.cache
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Logs
+*.log
+backend/storage/logs/*.log
+!backend/storage/logs/.gitignore
+
+# Database
+backend/database/*.sqlite
+backend/database/*.sqlite-journal
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+

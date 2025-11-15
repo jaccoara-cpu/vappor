@@ -1,0 +1,139 @@
+.catalog-page {
+  min-height: 100vh;
+  padding: var(--spacing-xl) 0;
+  padding-top: calc(var(--spacing-xl) + 80px);
+  position: relative;
+}
+
+.catalog-title {
+  margin-bottom: var(--spacing-2xl);
+  text-align: center;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.product-card {
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  background: rgba(6, 0, 16, 0.8);
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  padding: 0;
+  border: 1px solid rgba(57, 46, 78, 0.5);
+  width: 100%;
+  min-height: fit-content;
+}
+
+/* Remove old hover effects when MagicBento is used */
+.product-card.magic-product-card::before,
+.product-card.magic-product-card::after {
+  display: none;
+}
+
+.product-image {
+  width: 100%;
+  min-height: 200px;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px 20px 0 0;
+  position: relative;
+  z-index: 1;
+  padding: var(--spacing-lg);
+  aspect-ratio: 1;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform var(--transition-slow) ease-out;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.product-info {
+  padding: 1.25em;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  color: var(--white, #fff);
+  line-height: 1.2;
+}
+
+.product-price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #00ff00 !important;
+  margin: 0;
+  white-space: nowrap;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+}
+
+.empty-state,
+.error-message {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--text-secondary);
+}
+
+.error-message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .catalog-page {
+    padding-top: calc(var(--spacing-lg) + 70px);
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  .product-image {
+    min-height: 150px;
+    padding: var(--spacing-md);
+  }
+  
+  .product-info {
+    padding: 1em;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .product-name {
+    font-size: 14px;
+  }
+  
+  .product-price {
+    font-size: 24px;
+  }
+}
