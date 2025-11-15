@@ -52,15 +52,8 @@ RUN echo "APP_NAME=VAPOR" > .env && \
 RUN chmod -R 777 storage bootstrap/cache database
 RUN chown -R www-data:www-data storage bootstrap/cache database
 
-# Copy entrypoint script
-COPY backend/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
 # Expose port (Render will set PORT env var)
 EXPOSE 8000
-
-# Use entrypoint script
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # Start command (will be overridden by Render's startCommand)
 CMD php artisan serve --host=0.0.0.0 --port=8000
