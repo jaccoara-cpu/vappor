@@ -17,8 +17,12 @@ services:
     envVars:
       - key: APP_ENV
         value: production
+      - key: APP_NAME
+        value: VAPOR
+      - key: APP_URL
+        value: https://vapor-backend-sy48.onrender.com
       - key: APP_DEBUG
-        value: false
+        value: true
       - key: APP_TIMEZONE
         value: Europe/Kiev
       - key: APP_LOCALE

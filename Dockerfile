@@ -28,11 +28,12 @@ COPY backend/ /var/www/html/
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Create database file
-RUN touch database/database.sqlite
+# Create database file and ensure it's writable
+RUN touch database/database.sqlite && chmod 666 database/database.sqlite
 
 # Set permissions
-RUN chmod -R 775 storage bootstrap/cache database
+RUN chmod -R 777 storage bootstrap/cache database
+RUN chown -R www-data:www-data storage bootstrap/cache database
 
 # Expose port (Render will set PORT env var)
 EXPOSE 8000
