@@ -38,17 +38,15 @@ RUN echo "APP_NAME=VAPOR" > .env && \
     echo "APP_LOCALE=ru" >> .env && \
     echo "APP_FALLBACK_LOCALE=ru" >> .env && \
     echo "DB_CONNECTION=sqlite" >> .env && \
-    echo "DB_DATABASE=/var/www/html/database/database.sqlite" >> .env && \
+    echo "DB_DATABASE=/var/www/html/storage/database.sqlite" >> .env && \
     echo "LOG_CHANNEL=stack" >> .env && \
     echo "LOG_LEVEL=error" >> .env && \
     echo "SESSION_DRIVER=file" >> .env && \
     echo "TELEGRAM_BOT_TOKEN=8577074525:AAGusZJT_kPcjnOHVfRB22ZtJNteDGG1DlE" >> .env && \
     echo "TELEGRAM_USER_ID=7736398733" >> .env
 
-# Create database directory (file will be created at runtime if needed)
-# Note: Database file should be created before migrations run
-RUN mkdir -p database && \
-    chmod 777 database
+# Database will be created in persistent storage at runtime
+# No need to create database directory in image
 
 # Set permissions
 RUN chmod -R 777 storage bootstrap/cache database

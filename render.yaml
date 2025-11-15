@@ -33,7 +33,7 @@ services:
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE
-        value: /var/www/html/database/database.sqlite
+        value: /var/www/html/storage/database.sqlite
       - key: LOG_CHANNEL
         value: stack
       - key: LOG_LEVEL
