@@ -7,11 +7,15 @@ services:
     plan: free
     buildCommand: |
       php artisan key:generate --force --show || true &&
+      touch /var/www/html/database/database.sqlite &&
+      chmod 666 /var/www/html/database/database.sqlite &&
       php artisan migrate --force &&
       php artisan storage:link &&
       php artisan config:clear &&
       php artisan cache:clear
     preDeployCommand: |
+      touch /var/www/html/database/database.sqlite &&
+      chmod 666 /var/www/html/database/database.sqlite &&
       php artisan migrate --force
     startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
     envVars:
@@ -34,7 +38,7 @@ services:
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE
-        value: /var/www/html/storage/database/database.sqlite
+        value: /var/www/html/database/database.sqlite
       - key: LOG_CHANNEL
         value: stack
       - key: LOG_LEVEL
@@ -49,6 +53,6 @@ services:
       name: vapor-storage
       mountPath: /var/www/html/storage
       sizeGB: 1
-    # Note: Database file should be in persistent storage
-    # We'll store it in storage/database to use the persistent disk
+    # Also mount database directory to persistent storage
+    # Note: Database should be in persistent storage to survive restarts
 

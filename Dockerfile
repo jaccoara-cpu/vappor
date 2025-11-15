@@ -38,22 +38,21 @@ RUN echo "APP_NAME=VAPOR" > .env && \
     echo "APP_LOCALE=ru" >> .env && \
     echo "APP_FALLBACK_LOCALE=ru" >> .env && \
     echo "DB_CONNECTION=sqlite" >> .env && \
-    echo "DB_DATABASE=/var/www/html/storage/database/database.sqlite" >> .env && \
+    echo "DB_DATABASE=/var/www/html/database/database.sqlite" >> .env && \
     echo "LOG_CHANNEL=stack" >> .env && \
     echo "LOG_LEVEL=error" >> .env && \
     echo "SESSION_DRIVER=file" >> .env && \
     echo "TELEGRAM_BOT_TOKEN=8577074525:AAGusZJT_kPcjnOHVfRB22ZtJNteDGG1DlE" >> .env && \
     echo "TELEGRAM_USER_ID=7736398733" >> .env
 
-# Create database directory in storage (persistent on Render)
-# Note: Database file should be in persistent storage to survive restarts
-RUN mkdir -p storage/database && \
-    touch storage/database/database.sqlite && \
-    chmod 666 storage/database/database.sqlite
+# Create database directory (file will be created at runtime if needed)
+# Note: Database file should be created before migrations run
+RUN mkdir -p database && \
+    chmod 777 database
 
 # Set permissions
-RUN chmod -R 777 storage bootstrap/cache
-RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 777 storage bootstrap/cache database
+RUN chown -R www-data:www-data storage bootstrap/cache database
 
 # Expose port (Render will set PORT env var)
 EXPOSE 8000
