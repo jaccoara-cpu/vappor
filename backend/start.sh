@@ -46,18 +46,25 @@ if [ ! -f "$DB_PATH" ]; then
     exit 1
 fi
 
+# Verify DB_DATABASE environment variable is set
+echo "Checking DB_DATABASE environment variable..." >&2
+echo "DB_DATABASE env var: ${DB_DATABASE:-NOT SET}" >&2
+
 # Clear config cache to ensure environment variables are loaded
 echo "Clearing config cache..." >&2
 php artisan config:clear
-php artisan cache:clear
 
-# Verify DB_DATABASE is set correctly
-echo "Checking DB_DATABASE environment variable..." >&2
-php artisan tinker --execute="echo config('database.connections.sqlite.database');" || echo "DB_DATABASE: $DB_DATABASE" >&2
+# Verify the database path Laravel will use
+echo "Verifying Laravel database configuration..." >&2
+php -r "require 'vendor/autoload.php'; \$app = require_once 'bootstrap/app.php'; \$app->make('Illuminate\Contracts\Console\Kernel')->bootstrap(); echo 'DB_DATABASE config: ' . config('database.connections.sqlite.database') . PHP_EOL;" >&2 || echo "Could not verify config" >&2
 
-# Run migrations
+# Run migrations (this will also create tables if needed)
 echo "Running migrations..." >&2
 php artisan migrate --force
+
+# Now clear cache after database is ready
+echo "Clearing application cache..." >&2
+php artisan cache:clear || echo "Cache clear skipped (non-critical)" >&2
 
 # Verify migrations succeeded
 echo "Verifying database..." >&2
