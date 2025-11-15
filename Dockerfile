@@ -31,7 +31,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Create .env file with basic configuration
 RUN echo "APP_NAME=VAPOR" > .env && \
     echo "APP_ENV=production" >> .env && \
-    echo "APP_DEBUG=false" >> .env && \
+    echo "APP_KEY=base64:KZ7ZcvhZd78pShCKFUQoHUmOKFdPXxay6HVTIqnerPI=" >> .env && \
+    echo "APP_DEBUG=true" >> .env && \
     echo "APP_TIMEZONE=Europe/Kiev" >> .env && \
     echo "APP_LOCALE=ru" >> .env && \
     echo "APP_FALLBACK_LOCALE=ru" >> .env && \
