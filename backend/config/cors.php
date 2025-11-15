@@ -29,8 +29,11 @@ return [
     ],
 
     'allowed_origins_patterns' => [
-        // Разрешаем все домены для продакшена (можно ограничить конкретными доменами)
-        // Пример: '#^https?://(www\.)?yourdomain\.com$#',
+        // Allow all Netlify domains
+        '#^https?://[a-z0-9-]+\.netlify\.app$#',
+        '#^https?://[a-z0-9-]+\.netlify\.app/.*$#',
+        // Allow all domains for production (can be restricted to specific domains)
+        // Example: '#^https?://(www\.)?yourdomain\.com$#',
     ],
 
     'allowed_headers' => ['*'],
