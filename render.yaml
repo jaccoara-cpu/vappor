@@ -37,6 +37,10 @@ services:
         value: stack
       - key: LOG_LEVEL
         value: error
+      - key: TELEGRAM_BOT_TOKEN
+        value: 8577074525:AAGusZJT_kPcjnOHVfRB22ZtJNteDGG1DlE
+      - key: TELEGRAM_USER_ID
+        value: 7736398733
     disk:
       name: vapor-storage
       mountPath: /var/www/html/storage
